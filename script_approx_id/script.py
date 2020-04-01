@@ -14,6 +14,7 @@ class TaylorApproximator:
         self.y = x(t_m)
         self.t_m = t_m
         self.t0 = t0
+
         self.poly = np.array(
             [(self.t_m - self.t0)**j for j in range(p+1)])
 
@@ -77,16 +78,17 @@ if __name__ == "__main__":
 
     p = 3
 
-    app = TaylorApproximator(x=x, p=p, t0=[0, 0], t_m=[1, 2])
+    app = TaylorApproximator(
+        x=x, p=p, t0=[0, 0], t_m=[1, 2])
 
     def x_prime(t):
         return 4*np.exp(t)
 
-    alpha_hat = app([0, 0, 0, 0])
+    alpha_hat = app([0.001 for _ in range(p+1)])
     print(alpha_hat)
 
-    app_rhs = RHSApproximator(alpha_hat=alpha_hat, p=p, t0=[
-                              0, 0], t_m=[1, 2])
+    app_rhs = RHSApproximator(alpha_hat=alpha_hat, p=p, t0=app.t0,
+                              t_m=app.t_m)
 
     beta_hat = app_rhs([0])
-    print(beta_hat)
+    print(beta_hat[0])
