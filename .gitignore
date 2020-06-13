@@ -3,3 +3,8 @@ talk_notes
 .vscode
 .mypy_cache
 .ipynb*
+Bo*
+*.mw
+*.maple
+presentation
+.DS_*
